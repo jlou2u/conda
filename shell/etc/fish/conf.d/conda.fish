@@ -220,11 +220,14 @@ end
 
 # Faster but less tested (?)
 function __fish_conda_commands
-  command echo -e "activate\ndeactivate" ;and ls --color=none (conda info --root)/bin/conda-* | sed -r 's/^.*conda-([a-z]+)/\1/'
+  command echo "activate"
+  command echo "deactivate" 
+  conda help | awk '/^    [a-z]+/ {print $1}'
 end
 
 function __fish_conda_envs
-  command echo root ;and ls -1 --color=none (conda info --root)/envs/
+  command echo base 
+  conda env list | grep -v "#" | cut -f1 -d' '
 end
 
 function __fish_conda_packages
